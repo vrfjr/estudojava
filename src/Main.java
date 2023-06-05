@@ -4,26 +4,53 @@ import java.util.Scanner;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-       // Solicita dois numeros ao usuario
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Digite o primeiro numero");
-        int numero1 = scanner.nextInt();
+        System.out.println("Digite a expressão matemática: ");
+        String expressao = scanner.nextLine();
 
-        System.out.println("Sidigite o seundo numero");
-        int numero2 = scanner.nextInt();
+        // Remove espaços em branco
+        expressao = expressao.replaceAll("\\s+", "");
 
+        //divide a expressão em operandos e operadores
+        String[] partes = expressao.split("(?<=\\d)(?=\\D)|(?<=\\D)(?=\\d)");
 
-        // realiza as operaçõs matematicas
-        int soma = numero1 + numero2;
-        int subtracao = numero1 - numero2;
-        int multiplicacao = numero1 * numero2;
-        int divisao = numero1 / numero2;
+        // validação da expressão
+        if(partes.length != 3){
+            System.out.println("Expressão invalida");
+            return;
+        }
 
+        double resultado = 0;
+        try{
+            //coverte os operandos em numeros
+            double numero1 = Double.parseDouble(partes[0]);
+            double numero2 = Double.parseDouble(partes[0]);
 
-        //exibe os rsultados
-        System.out.println("Soma: " + soma);
-        System.out.println("Subtração: " + subtracao);
-        System.out.println("Multiplicação: " + multiplicacao);
-        System.out.println("Divisão: " + divisao);
+            //realiza a operação de acordo com operador
+            switch(partes[1]){
+                case "+":
+                    resultado = numero1 + numero2;
+                    break;
+                case "-":
+                    resultado = numero1 - numero2;
+                    break;
+                case "*":
+                    resultado = numero1 * numero2;
+                    break;
+                case "/":
+                    resultado = numero1 / numero2;
+                    break;
+                default:
+                    System.out.println("Operador Invalido");
+                    return;
+            }
+
+            //exibe o resultado
+            System.out.println("Resultado: " + resultado);
+
+             } catch (NumberFormatException e){
+            System.out.println("Operandos inválidos!");
+        }
+
         }
     }
